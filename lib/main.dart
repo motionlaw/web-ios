@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ui/login_page.dart';
-import 'package:flutter_app/ui/home.dart';
+import 'package:flutter_app/ui/modules/login_page.dart';
+import 'package:flutter_app/ui/modules/home.dart';
+import 'package:flutter_app/ui/modules/communications.dart';
+import 'package:flutter_app/ui/modules/chat.dart';
+import 'package:flutter_app/ui/modules/settings.dart';
+import 'package:flutter_app/ui/modules/payment.dart';
+import 'package:flutter_app/ui/modules/support.dart';
 import 'package:flutter_app/ui/common/loading.dart';
 import 'package:flutter_app/style/theme.dart' as Theme;
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:hive/hive.dart';
+
+import 'ui/modules/settings.dart';
 
 LoginPage appAuth = new LoginPage();
 Widget defaultHome = new LoginPage();
@@ -28,7 +35,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Motion Law.',
       theme: new ThemeData(
           primaryColor: Theme.Colors.motionTmBlue
@@ -37,7 +44,12 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => HomePage(),
         '/login': (context) => LoginPage(),
-        '/loading': (context) => LoadingPage()
+        '/loading': (context) => LoadingPage(),
+        '/communication': (context) => CommunicationPage(),
+        '/chat': (context) => ChatPage(),
+        '/payment': (context) => PaymentPage(),
+        '/settings': (context) => SettingsPage(),
+        '/support' : (context) => SupportPage()
       }
     );
   }

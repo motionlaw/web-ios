@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class LoadingPage extends StatefulWidget {
   LoadingPage({Key key}) : super(key: key);
@@ -11,21 +12,13 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      backgroundColor: Colors.white,
       body: Container(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                child: Image(
-                  image: new AssetImage('assets/img/loading.gif'),
-                  fit: BoxFit.scaleDown,
-                ),
-              ),
-            ),
-          ],
+        child:  new Container(
+          child: new Center(
+            child: new CupertinoActivityIndicator(),
+          ),
         ),
-      ),
+      )
     );
   }
 }
