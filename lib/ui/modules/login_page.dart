@@ -228,7 +228,7 @@ class _LoginPageState extends State<LoginPage>
   }
 
   Widget _buildMenuBar(BuildContext context) {
-    return Container(
+    /*return Container(
       width: 300.0,
       height: 50.0,
       decoration: BoxDecoration(
@@ -272,7 +272,7 @@ class _LoginPageState extends State<LoginPage>
           ],
         ),
       ),
-    );
+    )*/
   }
 
   Widget _buildSignIn(BuildContext context) {

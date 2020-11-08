@@ -6,6 +6,8 @@ import 'package:flutter_app/ui/modules/chat.dart';
 import 'package:flutter_app/ui/modules/settings.dart';
 import 'package:flutter_app/ui/modules/payment.dart';
 import 'package:flutter_app/ui/modules/support.dart';
+import 'package:flutter_app/ui/modules/refer.dart';
+import 'package:flutter_app/ui/modules/reviews.dart';
 import 'package:flutter_app/ui/common/loading.dart';
 import 'package:flutter_app/style/theme.dart' as Theme;
 import 'package:flutter/services.dart';
@@ -49,7 +51,9 @@ class MyApp extends StatelessWidget {
         '/chat': (context) => ChatPage(),
         '/payment': (context) => PaymentPage(),
         '/settings': (context) => SettingsPage(),
-        '/support' : (context) => SupportPage()
+        '/support' : (context) => SupportPage(),
+        '/refer' : (context) => ReferPage(),
+        '/reviews' : (context) => ReviewsPage()
       }
     );
   }

@@ -55,6 +55,16 @@ class NavDrawer extends StatelessWidget {
             title: Text('Email Us'),
             onTap: () => {Navigator.pushNamed(context, '/support')},
           ),
+          ListTile(
+            leading: Icon(Icons.accessibility_sharp),
+            title: Text('Refer a Friend'),
+            onTap: () => {Navigator.pushNamed(context, '/refer')},
+          ),
+          ListTile(
+            leading: Icon(Icons.app_blocking_rounded),
+            title: Text('Reviews'),
+            onTap: () => {Navigator.pushNamed(context, '/reviews')},
+          ),
           Divider(),
           ListTile(
             leading: Icon(Icons.settings),
