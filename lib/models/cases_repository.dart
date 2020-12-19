@@ -3,7 +3,7 @@ import 'cases.dart';
 class CasesRepository {
   static const _allCases = <Cases>[
     Cases(
-      state: State.open,
+      state: Status.open,
       id: 0,
       stage: Stage.attorney_review,
       name: 'D1002-20 Franklin Eduardo Araniva Pastora',
@@ -11,7 +11,7 @@ class CasesRepository {
       added: '1969-07-20 20:18:04Z',
     ),
     Cases(
-      state: State.open,
+      state: Status.open,
       id: 1,
       stage: Stage.filed,
       name: 'D1005-19 Jeudy Jorge Benjamin Cordero',
@@ -19,7 +19,7 @@ class CasesRepository {
       added: '1969-07-20 20:18:04Z',
     ),
     Cases(
-      state: State.open,
+      state: Status.open,
       id: 2,
       stage: Stage.upcoming_trial,
       name: 'D1006-19 Yainier Jimenez Perez',
@@ -27,7 +27,7 @@ class CasesRepository {
       added: '1969-07-20 20:18:04Z',
     ),
     Cases(
-      state: State.open,
+      state: Status.open,
       id: 3,
       stage: Stage.pending_payment,
       name: 'D1019-20 Melec Alexis Amaya Pastora',
@@ -35,7 +35,7 @@ class CasesRepository {
       added: '1969-07-20 20:18:04Z',
     ),
     Cases(
-      state: State.open,
+      state: Status.open,
       id: 4,
       stage: Stage.filed,
       name: 'D1020-20 Ada D. Okunoghae',
@@ -44,8 +44,8 @@ class CasesRepository {
     ),
   ];
 
-  static List<Cases> loadCases(State state) {
-    if (State == State.open) {
+  static List<Cases> loadCases(Status state) {
+    if (Status == Status.open) {
       return _allCases;
     } else {
       return _allCases.where((p) => p.state == state).toList();

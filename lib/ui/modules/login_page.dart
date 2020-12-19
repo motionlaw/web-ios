@@ -1,34 +1,34 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../style/theme.dart' as Theme;
-import '../../utils/bubble_indication_painter.dart';
-import 'package:http/http.dart' as http;
-import '../../utils/functions.dart' as tool;
 import 'package:hive/hive.dart';
-import '../../utils/constants.dart' as Constant;
-import 'dart:convert';
-import 'dart:async';
+import 'package:http/http.dart' as http;
+
+import '../../style/theme.dart' as Theme;
+import '../../utils/functions.dart' as tool;
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
 
-  checkStatus() async{
+  checkStatus() async {
     var box = await Hive.openBox('app_data');
-    if ( box.get('token') != null ) {
+    if (box.get('token') != null) {
       return true;
     } else {
       return false;
     }
   }
+
   @override
   _LoginPageState createState() => new _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage>
-  with SingleTickerProviderStateMixin {
-
+    with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   final FocusNode myFocusNodeEmailLogin = FocusNode();
@@ -59,7 +59,6 @@ class _LoginPageState extends State<LoginPage>
 
   Map data;
 
-
   Future<void> _handleClickMe() async {
     return showDialog<void>(
       context: context,
@@ -82,18 +81,15 @@ class _LoginPageState extends State<LoginPage>
   }
 
   Future auth(String mail, String pass) async {
-    if ( tool.Functions.validateEmail(mail) ) {
-      http.Response response = await http.post('https://qqv.oex.mybluehost.me/api/login',
+    if (tool.Functions.validateEmail(mail)) {
+      http.Response response = await http.post(
+          'https://qqv.oex.mybluehost.me/api/login',
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
-          body: jsonEncode(<String, String>{
-            'email': mail,
-            'password': pass
-          })
-      );
+          body: jsonEncode(<String, String>{'email': mail, 'password': pass}));
       data = json.decode(response.body);
-      if( data['response'] == true ){
+      if (data['response'] == true) {
         var box = await Hive.openBox('app_data');
         box.put('token', data['token']);
       }
@@ -110,69 +106,105 @@ class _LoginPageState extends State<LoginPage>
           overscroll.disallowGlow();
         },
         child: SingleChildScrollView(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height >= 775.0
-                    ? MediaQuery.of(context).size.height
-                    : 775.0,
-                decoration: new BoxDecoration(
-                  gradient: new LinearGradient(
-                      colors: [
-                        Theme.Colors.loginGradientStart,
-                        Theme.Colors.loginGradientEnd
-                      ],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 1.0),
-                      stops: [0.0, 1.0],
-                      tileMode: TileMode.clamp),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height >= 775.0
+                ? MediaQuery.of(context).size.height
+                : 775.0,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 0,
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                  ),
+                  child: Flex(
+                    direction: Axis.horizontal,
+                    children: <Widget>[
+                      Container(
+                          width: MediaQuery.of(context).size.width * 1,
+                          color: Colors.black12,
+                          child: Padding(
+                              padding: const EdgeInsets.only(
+                                left: 50,
+                                top: 30,
+                                right: 50,
+                                bottom: 20,
+                              ),
+                              child: FittedBox(
+                                child: Image.asset(
+                                  "assets/img/Motionlaw-logogold-cr.png",
+                                ),
+                              )))
+                    ],
+                  ),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
+                Flex(
+                  direction: Axis.horizontal,
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 75.0),
-                      child: new Image(
-                          height: 150.0,
-                          fit: BoxFit.fill,
-                          image: new AssetImage('assets/img/login_logo.png')),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20.0),
-                      child: _buildMenuBar(context),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: PageView(
-                        controller: _pageController,
-                        onPageChanged: (i) {
-                          if (i == 0) {
-                            setState(() {
-                              right = Colors.white;
-                              left = Colors.black;
-                            });
-                          } else if (i == 1) {
-                            setState(() {
-                              right = Colors.black;
-                              left = Colors.white;
-                            });
-                          }
-                        },
-                        children: <Widget>[
-                          new ConstrainedBox(
-                            constraints: const BoxConstraints.expand(),
-                            child: _buildSignIn(context),
-                          ),
-                          new ConstrainedBox(
-                            constraints: const BoxConstraints.expand(),
-                            child: _buildSignUp(context),
-                          ),
-                        ],
+                    FittedBox(
+                      child: Image.asset(
+                        "assets/img/DC-Immigration-Law-Firm.png",
+                        fit: BoxFit.fitWidth,
+                        width: MediaQuery.of(context).size.width,
                       ),
-                    ),
+                      //fit: BoxFit.fitWidth,
+                    )
                   ],
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 0,
+                    top: 20,
+                    right: 0,
+                    bottom: 0,
+                  ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: IconButton(
+                      color: Theme.Colors.loginGradientButton,
+                      icon: FaIcon(FontAwesomeIcons.userFriends),
+                      iconSize: 50,
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: PageView(
+                    controller: _pageController,
+                    onPageChanged: (i) {
+                      if (i == 0) {
+                        setState(() {
+                          right = Colors.white;
+                          left = Colors.black;
+                        });
+                      } else if (i == 1) {
+                        setState(() {
+                          right = Colors.black;
+                          left = Colors.white;
+                        });
+                      }
+                    },
+                    children: <Widget>[
+                      new ConstrainedBox(
+                        constraints: const BoxConstraints.expand(),
+                        child: _buildSignIn(context),
+                      ),
+                      new ConstrainedBox(
+                        constraints: const BoxConstraints.expand(),
+                        child: _buildSignUp(context),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
+          ),
+        ),
       ),
     );
   }
@@ -297,8 +329,7 @@ class _LoginPageState extends State<LoginPage>
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0
-                        ),
+                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
                         child: TextFormField(
                           focusNode: myFocusNodeEmailLogin,
                           controller: loginEmailController,
@@ -364,52 +395,52 @@ class _LoginPageState extends State<LoginPage>
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 170.0),
-                decoration: new BoxDecoration(
-                  color: Theme.Colors.loginGradientButton,
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                child: MaterialButton(
-                    //highlightColor: Colors.transparent,
-                    padding: EdgeInsets.all(0),
-                    child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 42.0),
-                        child: Text(
-                          (submit == false) ? "LOGIN" : "LOADING...",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontFamily: "WorkSansBold"),
+                  margin: EdgeInsets.only(top: 170.0),
+                  decoration: new BoxDecoration(
+                    color: Theme.Colors.loginGradientButton,
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: MaterialButton(
+                      //highlightColor: Colors.transparent,
+                      padding: EdgeInsets.all(0),
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 42.0),
+                          child: Text(
+                            (submit == false) ? "LOGIN" : "LOADING...",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontFamily: "WorkSansBold"),
+                          ),
                         ),
                       ),
-                    ),
-                    onPressed: () {
-                      if ( loginEmailController.text == "" ) {
-                        _handleClickMe();
-                        return;
-                      }
-                      if ( loginPasswordController.text == "" ) {
-                        showInSnackBar("Password field is required!", "warning");
-                        return;
-                      }
-                      setState(() {
-                        submit = !submit;
-                      });
-                      auth(loginEmailController.text, loginPasswordController.text).then((response) {
-                        print(response);
-                        if( response == true ){
-                          Navigator.pushNamed(context, '/loading');
-                          var timer = Timer(Duration(seconds: 3), () =>
-                              Navigator.pushNamed(context, '/home')
-                          );
-                          //timer.cancel();
+                      onPressed: () {
+                        if (loginEmailController.text == "") {
+                          _handleClickMe();
+                          return;
                         }
-                      });
-                    }
-                )
-              ),
+                        if (loginPasswordController.text == "") {
+                          showInSnackBar(
+                              "Password field is required!", "warning");
+                          return;
+                        }
+                        setState(() {
+                          submit = !submit;
+                        });
+                        auth(loginEmailController.text,
+                                loginPasswordController.text)
+                            .then((response) {
+                          print(response);
+                          if (response == true) {
+                            Navigator.pushNamed(context, '/loading');
+                            var timer = Timer(Duration(seconds: 3),
+                                () => Navigator.pushNamed(context, '/home'));
+                            //timer.cancel();
+                          }
+                        });
+                      })),
             ],
           ),
           Padding(
@@ -603,13 +634,11 @@ class _LoginPageState extends State<LoginPage>
                       ),
                     ),
                     onPressed: () => {
-                    //showInSnackBar("SignUp button pressed", "info")
-                    Navigator.pushNamed(context, '/loading'),
-                    Timer(Duration(seconds: 2), () => {
-                      Navigator.pushNamed(context, '/home')
-                    })
-                    }
-                ),
+                          //showInSnackBar("SignUp button pressed", "info")
+                          Navigator.pushNamed(context, '/loading'),
+                          Timer(Duration(seconds: 2),
+                              () => {Navigator.pushNamed(context, '/home')})
+                        }),
               ),
             ],
           ),

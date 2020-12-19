@@ -1,8 +1,6 @@
-import 'package:hive/hive.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/utils/nav-drawer.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 Map data;
 
@@ -33,15 +31,103 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _asyncMethod(context);
   }
+
   Widget build(BuildContext context) {
     return new Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
         title: Text('Motion Law'),
       ),
-      body: Center(
-        child: Text('Dashboard'),
-      ),
+      body: SafeArea(
+          child: Column(children: <Widget>[
+        Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+          new Flex(
+            direction: Axis.horizontal,
+            children: <Widget>[
+              FittedBox(
+                child: Image.asset(
+                  "assets/img/5fdb83a05febc.jpg",
+                  fit: BoxFit.fitWidth,
+                  width: MediaQuery.of(context).size.width,
+                ),
+                //fit: BoxFit.fitWidth,
+              )
+            ],
+          )
+        ]),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Container(
+                    width: 150,
+                    child: new CupertinoButton(
+                      padding: EdgeInsets.all(10),
+                      color: Theme.of(context).primaryColor,
+                      child: Column(
+                        children: <Widget>[
+                          Icon(Icons.message, size: 50.0),
+                          Text("Contact us")
+                        ],
+                      ),
+                      onPressed: () => {Navigator.pushNamed(context, '/chat')},
+                    ))),
+            Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Container(
+                    width: 150,
+                    child: new CupertinoButton(
+                      padding: EdgeInsets.all(10),
+                      color: Theme.of(context).primaryColor,
+                      child: Column(
+                        children: <Widget>[
+                          Icon(Icons.account_balance_wallet, size: 50.0),
+                          Text("Pay Bill")
+                        ],
+                      ),
+                      onPressed: () =>
+                          {Navigator.pushNamed(context, '/payment')},
+                    ))),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Container(
+                    width: 150,
+                    child: new CupertinoButton(
+                      padding: EdgeInsets.all(10),
+                      color: Theme.of(context).primaryColor,
+                      child: Column(
+                        children: <Widget>[
+                          Icon(Icons.wysiwyg_rounded, size: 50.0),
+                          Text("Leave a Review")
+                        ],
+                      ),
+                      onPressed: () =>
+                          {Navigator.pushNamed(context, '/reviews')},
+                    ))),
+            Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Container(
+                    width: 150,
+                    child: new CupertinoButton(
+                      padding: EdgeInsets.all(10),
+                      color: Theme.of(context).primaryColor,
+                      child: Column(
+                        children: <Widget>[
+                          Icon(Icons.accessibility_rounded, size: 50.0),
+                          Text("Refer a Friend")
+                        ],
+                      ),
+                      onPressed: () => {Navigator.pushNamed(context, '/refer')},
+                    ))),
+          ],
+        )
+      ])),
     );
   }
 }

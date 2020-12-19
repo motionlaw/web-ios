@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
-
-enum State {
+enum Status {
   open,
   closed,
 }
@@ -35,7 +33,7 @@ class Cases {
         assert(number != null),
         assert(added != null);
 
-  final State state;
+  final Status state;
   final int id;
   final Stage stage;
   final String name;
