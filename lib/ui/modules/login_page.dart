@@ -43,14 +43,6 @@ class _LoginPageState extends State<LoginPage>
 
   bool submit = false;
   bool _obscureTextLogin = true;
-  bool _obscureTextSignup = true;
-  bool _obscureTextSignupConfirm = true;
-
-  TextEditingController signupEmailController = new TextEditingController();
-  TextEditingController signupNameController = new TextEditingController();
-  TextEditingController signupPasswordController = new TextEditingController();
-  TextEditingController signupConfirmPasswordController =
-      new TextEditingController();
 
   PageController _pageController;
 
@@ -59,14 +51,14 @@ class _LoginPageState extends State<LoginPage>
 
   Map data;
 
-  Future<void> _handleClickMe() async {
+  Future<void> _handleClickMe(message) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text('Required Fields!'),
-          content: Text('Before continue, you must fill the required fields'),
+          content: Text(message),
           actions: <Widget>[
             CupertinoDialogAction(
               child: Text('Close'),
@@ -106,6 +98,7 @@ class _LoginPageState extends State<LoginPage>
           overscroll.disallowGlow();
         },
         child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height >= 775.0
@@ -129,10 +122,10 @@ class _LoginPageState extends State<LoginPage>
                           color: Colors.black12,
                           child: Padding(
                               padding: const EdgeInsets.only(
-                                left: 50,
-                                top: 30,
-                                right: 50,
-                                bottom: 20,
+                                left: 100,
+                                top: 50,
+                                right: 100,
+                                bottom: 30,
                               ),
                               child: FittedBox(
                                 child: Image.asset(
@@ -167,7 +160,7 @@ class _LoginPageState extends State<LoginPage>
                     child: IconButton(
                       color: Theme.Colors.loginGradientButton,
                       icon: FaIcon(FontAwesomeIcons.userFriends),
-                      iconSize: 50,
+                      iconSize: 40,
                       onPressed: () {},
                     ),
                   ),
@@ -193,10 +186,6 @@ class _LoginPageState extends State<LoginPage>
                       new ConstrainedBox(
                         constraints: const BoxConstraints.expand(),
                         child: _buildSignIn(context),
-                      ),
-                      new ConstrainedBox(
-                        constraints: const BoxConstraints.expand(),
-                        child: _buildSignUp(context),
                       ),
                     ],
                   ),
@@ -259,54 +248,6 @@ class _LoginPageState extends State<LoginPage>
     ));
   }
 
-  Widget _buildMenuBar(BuildContext context) {
-    /*return Container(
-      width: 300.0,
-      height: 50.0,
-      decoration: BoxDecoration(
-        color: Color(0x552B2B2B),
-        borderRadius: BorderRadius.all(Radius.circular(25.0)),
-      ),
-      child: CustomPaint(
-        painter: TabIndicationPainter(pageController: _pageController),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Expanded(
-              child: MaterialButton(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onPressed: _onSignInButtonPress,
-                child: Text(
-                  "Existing",
-                  style: TextStyle(
-                      color: left,
-                      fontSize: 16.0,
-                      fontFamily: "WorkSansSemiBold"),
-                ),
-              ),
-            ),
-            //Container(height: 33.0, width: 1.0, color: Colors.white),
-            Expanded(
-              child: MaterialButton(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onPressed: _onSignUpButtonPress,
-                child: Text(
-                  "New",
-                  style: TextStyle(
-                      color: right,
-                      fontSize: 16.0,
-                      fontFamily: "WorkSansSemiBold"),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    )*/
-  }
-
   Widget _buildSignIn(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(top: 23.0),
@@ -343,11 +284,11 @@ class _LoginPageState extends State<LoginPage>
                             icon: Icon(
                               FontAwesomeIcons.envelope,
                               color: Colors.black,
-                              size: 22.0,
+                              size: 14.0,
                             ),
-                            hintText: "Email Address",
+                            hintText: "EMAIL ADDRESS",
                             hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+                                fontFamily: "WorkSansSemiBold", fontSize: 14.0),
                           ),
                         ),
                       ),
@@ -371,19 +312,19 @@ class _LoginPageState extends State<LoginPage>
                             border: InputBorder.none,
                             icon: Icon(
                               FontAwesomeIcons.lock,
-                              size: 22.0,
+                              size: 14.0,
                               color: Colors.black,
                             ),
-                            hintText: "Password",
+                            hintText: "PASSWORD",
                             hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 17.0),
+                                fontFamily: "WorkSansSemiBold", fontSize: 14.0),
                             suffixIcon: GestureDetector(
                               onTap: _toggleLogin,
                               child: Icon(
                                 _obscureTextLogin
                                     ? FontAwesomeIcons.eye
                                     : FontAwesomeIcons.eyeSlash,
-                                size: 15.0,
+                                size: 14.0,
                                 color: Colors.black,
                               ),
                             ),
@@ -395,36 +336,36 @@ class _LoginPageState extends State<LoginPage>
                 ),
               ),
               Container(
-                  margin: EdgeInsets.only(top: 170.0),
+                  margin: EdgeInsets.only(top: 220.0),
                   decoration: new BoxDecoration(
                     color: Theme.Colors.loginGradientButton,
                     borderRadius: BorderRadius.circular(15.0),
                   ),
-                  child: MaterialButton(
+                  child: CupertinoButton(
                       //highlightColor: Colors.transparent,
                       padding: EdgeInsets.all(0),
                       child: Container(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 42.0),
+                              vertical: 0.0, horizontal: 128.0),
                           child: Text(
                             (submit == false) ? "LOGIN" : "LOADING...",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20.0,
+                                fontSize: 14.0,
                                 fontFamily: "WorkSansBold"),
                           ),
                         ),
                       ),
                       onPressed: () {
                         if (loginEmailController.text == "") {
-                          _handleClickMe();
-                          return;
+                          _handleClickMe(
+                              'Before continue, you must fill the required fields');
+                          return false;
                         }
                         if (loginPasswordController.text == "") {
-                          showInSnackBar(
-                              "Password field is required!", "warning");
-                          return;
+                          _handleClickMe('Password field is required!');
+                          return false;
                         }
                         setState(() {
                           submit = !submit;
@@ -438,6 +379,10 @@ class _LoginPageState extends State<LoginPage>
                             var timer = Timer(Duration(seconds: 3),
                                 () => Navigator.pushNamed(context, '/home'));
                             //timer.cancel();
+                          } else {
+                            _handleClickMe(
+                                'The username or password you entered is incorrect!');
+                            submit = !submit;
                           }
                         });
                       })),
@@ -461,217 +406,9 @@ class _LoginPageState extends State<LoginPage>
     );
   }
 
-  Widget _buildSignUp(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 23.0),
-      child: Column(
-        children: <Widget>[
-          Stack(
-            alignment: Alignment.topCenter,
-            overflow: Overflow.visible,
-            children: <Widget>[
-              Card(
-                elevation: 2.0,
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Container(
-                  width: 300.0,
-                  height: 360.0,
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: myFocusNodeName,
-                          controller: signupNameController,
-                          keyboardType: TextInputType.text,
-                          textCapitalization: TextCapitalization.words,
-                          style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.user,
-                              color: Colors.black,
-                            ),
-                            hintText: "Name",
-                            hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: myFocusNodeEmail,
-                          controller: signupEmailController,
-                          keyboardType: TextInputType.emailAddress,
-                          style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.envelope,
-                              color: Colors.black,
-                            ),
-                            hintText: "Email Address",
-                            hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: myFocusNodePassword,
-                          controller: signupPasswordController,
-                          obscureText: _obscureTextSignup,
-                          style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.lock,
-                              color: Colors.black,
-                            ),
-                            hintText: "Password",
-                            hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
-                            suffixIcon: GestureDetector(
-                              onTap: _toggleSignup,
-                              child: Icon(
-                                _obscureTextSignup
-                                    ? FontAwesomeIcons.eye
-                                    : FontAwesomeIcons.eyeSlash,
-                                size: 15.0,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 250.0,
-                        height: 1.0,
-                        color: Colors.grey[400],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          controller: signupConfirmPasswordController,
-                          obscureText: _obscureTextSignupConfirm,
-                          style: TextStyle(
-                              fontFamily: "WorkSansSemiBold",
-                              fontSize: 16.0,
-                              color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              FontAwesomeIcons.lock,
-                              color: Colors.black,
-                            ),
-                            hintText: "Confirmation",
-                            hintStyle: TextStyle(
-                                fontFamily: "WorkSansSemiBold", fontSize: 16.0),
-                            suffixIcon: GestureDetector(
-                              onTap: _toggleSignupConfirm,
-                              child: Icon(
-                                _obscureTextSignupConfirm
-                                    ? FontAwesomeIcons.eye
-                                    : FontAwesomeIcons.eyeSlash,
-                                size: 15.0,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 340.0),
-                decoration: new BoxDecoration(
-                  color: Theme.Colors.loginGradientButton,
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                child: MaterialButton(
-                    highlightColor: Colors.transparent,
-                    splashColor: Theme.Colors.loginGradientEnd,
-                    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 42.0),
-                      child: Text(
-                        "SIGN UP",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25.0,
-                            fontFamily: "WorkSansBold"),
-                      ),
-                    ),
-                    onPressed: () => {
-                          //showInSnackBar("SignUp button pressed", "info")
-                          Navigator.pushNamed(context, '/loading'),
-                          Timer(Duration(seconds: 2),
-                              () => {Navigator.pushNamed(context, '/home')})
-                        }),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _onSignInButtonPress() {
-    _pageController.animateToPage(0,
-        duration: Duration(milliseconds: 500), curve: Curves.decelerate);
-  }
-
-  void _onSignUpButtonPress() {
-    _pageController?.animateToPage(1,
-        duration: Duration(milliseconds: 500), curve: Curves.decelerate);
-  }
-
   void _toggleLogin() {
     setState(() {
       _obscureTextLogin = !_obscureTextLogin;
-    });
-  }
-
-  void _toggleSignup() {
-    setState(() {
-      _obscureTextSignup = !_obscureTextSignup;
-    });
-  }
-
-  void _toggleSignupConfirm() {
-    setState(() {
-      _obscureTextSignupConfirm = !_obscureTextSignupConfirm;
     });
   }
 }

@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                       color: Theme.of(context).primaryColor,
                       child: Column(
                         children: <Widget>[
-                          Icon(Icons.message, size: 50.0),
+                          Icon(CupertinoIcons.chat_bubble_2, size: 50.0),
                           Text("Contact us")
                         ],
                       ),
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                       color: Theme.of(context).primaryColor,
                       child: Column(
                         children: <Widget>[
-                          Icon(Icons.account_balance_wallet, size: 50.0),
+                          Icon(CupertinoIcons.creditcard, size: 50.0),
                           Text("Pay Bill")
                         ],
                       ),
@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                       color: Theme.of(context).primaryColor,
                       child: Column(
                         children: <Widget>[
-                          Icon(Icons.wysiwyg_rounded, size: 50.0),
+                          Icon(CupertinoIcons.t_bubble, size: 50.0),
                           Text("Leave a Review")
                         ],
                       ),
@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                       color: Theme.of(context).primaryColor,
                       child: Column(
                         children: <Widget>[
-                          Icon(Icons.accessibility_rounded, size: 50.0),
+                          Icon(CupertinoIcons.person_2_alt, size: 50.0),
                           Text("Refer a Friend")
                         ],
                       ),

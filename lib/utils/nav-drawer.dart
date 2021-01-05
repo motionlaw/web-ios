@@ -1,22 +1,24 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:hive/hive.dart';
 import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:http/http.dart' as http;
 
 _logout(context) async {
   Navigator.pushNamed(context, '/loading');
   var box = await Hive.openBox('app_data');
-  http.Response response = await http.post("https://qqv.oex.mybluehost.me/api/logout",
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer ${box.get('token')}'
-    }
-  );
+  http.Response response = await http.post(
+      "https://qqv.oex.mybluehost.me/api/logout",
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ${box.get('token')}'
+      });
   await box.delete('token');
-  var timer = Timer(Duration(seconds: 2), () => {
-    Navigator.pushNamed(context, '/login')
-  });
+  var timer = Timer(
+      Duration(seconds: 2), () => {Navigator.pushNamed(context, '/login')});
 }
+
 class NavDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -26,57 +28,52 @@ class NavDrawer extends StatelessWidget {
           ListTile(
             title: Align(
               alignment: Alignment.centerLeft,
-              child : SizedBox(
-                  child: Image.asset(
-                      'assets/img/Motionlaw-logogold.png',
-                      height:110
-                  )
-              ),
+              child: SizedBox(
+                  child: Image.asset('assets/img/Motionlaw-logogold.png',
+                      height: 110)),
             ),
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.message),
+            leading: Icon(CupertinoIcons.chat_bubble_2),
             title: Text('Communication'),
             onTap: () => {Navigator.pushNamed(context, '/communication')},
           ),
           ListTile(
-            leading: Icon(Icons.alternate_email),
+            leading: Icon(CupertinoIcons.at),
             title: Text('Chat'),
             onTap: () => {Navigator.pushNamed(context, '/chat')},
           ),
           ListTile(
-            leading: Icon(Icons.payment),
+            leading: Icon(CupertinoIcons.creditcard_fill),
             title: Text('Make a Payment'),
             onTap: () => {Navigator.pushNamed(context, '/payment')},
           ),
           ListTile(
-            leading: Icon(Icons.email),
+            leading: Icon(CupertinoIcons.mail_solid),
             title: Text('Email Us'),
             onTap: () => {Navigator.pushNamed(context, '/support')},
           ),
           ListTile(
-            leading: Icon(Icons.accessibility_sharp),
+            leading: Icon(CupertinoIcons.person_2_alt),
             title: Text('Refer a Friend'),
             onTap: () => {Navigator.pushNamed(context, '/refer')},
           ),
           ListTile(
-            leading: Icon(Icons.app_blocking_rounded),
+            leading: Icon(CupertinoIcons.device_phone_portrait),
             title: Text('Reviews'),
             onTap: () => {Navigator.pushNamed(context, '/reviews')},
           ),
           Divider(),
           ListTile(
-            leading: Icon(Icons.settings),
+            leading: Icon(CupertinoIcons.gear_solid),
             title: Text('Settings'),
             onTap: () => {Navigator.pushNamed(context, '/settings')},
           ),
           ListTile(
-            leading: Icon(Icons.exit_to_app),
+            leading: Icon(CupertinoIcons.delete_left),
             title: Text('Logout'),
-            onTap: () => {
-              _logout(context)
-            },
+            onTap: () => {_logout(context)},
           ),
         ],
       ),

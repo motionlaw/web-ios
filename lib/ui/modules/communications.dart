@@ -30,6 +30,16 @@ class CommunicationPage extends StatelessWidget {
           new FutureBuilder(
               future: _asyncMethod(),
               builder: (BuildContext context, AsyncSnapshot response) {
+                if (!response.hasData) {
+                  return Align(
+                      alignment: Alignment.bottomLeft,
+                      child: new Container(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        child: new Center(
+                          child: new CupertinoActivityIndicator(),
+                        ),
+                      ));
+                }
                 List<dynamic> jsonList = json.decode(response.data.body);
                 return new MyExpansionTileList(jsonList);
               })
@@ -82,7 +92,7 @@ class MyExpansionTileState extends State<MyExpansionTile> {
   @override
   Widget build(BuildContext context) {
     return new ExpansionTile(
-      leading: Icon(Icons.folder_outlined),
+      leading: Icon(CupertinoIcons.bag),
       title: Text(
         widget.name,
         style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
