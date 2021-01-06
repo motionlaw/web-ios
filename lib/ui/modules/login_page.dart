@@ -93,106 +93,98 @@ class _LoginPageState extends State<LoginPage>
   Widget build(BuildContext context) {
     return new Scaffold(
       key: _scaffoldKey,
-      body: NotificationListener<OverscrollIndicatorNotification>(
-        onNotification: (overscroll) {
-          overscroll.disallowGlow();
-        },
-        child: SingleChildScrollView(
-          physics: NeverScrollableScrollPhysics(),
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height >= 775.0
-                ? MediaQuery.of(context).size.height
-                : 775.0,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height >= 775.0
+            ? MediaQuery.of(context).size.height
+            : 775.0,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 0,
+                top: 0,
+                right: 0,
+                bottom: 0,
+              ),
+              child: Flex(
+                direction: Axis.horizontal,
+                children: <Widget>[
+                  Container(
+                      width: MediaQuery.of(context).size.width * 1,
+                      color: Colors.black12,
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 100,
+                            top: 50,
+                            right: 100,
+                            bottom: 30,
+                          ),
+                          child: FittedBox(
+                            child: Image.asset(
+                              "assets/img/Motionlaw-logogold-cr.png",
+                            ),
+                          )))
+                ],
+              ),
+            ),
+            Flex(
+              direction: Axis.horizontal,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 0,
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
+                FittedBox(
+                  child: Image.asset(
+                    "assets/img/DC-Immigration-Law-Firm.png",
+                    fit: BoxFit.fitWidth,
+                    width: MediaQuery.of(context).size.width,
                   ),
-                  child: Flex(
-                    direction: Axis.horizontal,
-                    children: <Widget>[
-                      Container(
-                          width: MediaQuery.of(context).size.width * 1,
-                          color: Colors.black12,
-                          child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 100,
-                                top: 50,
-                                right: 100,
-                                bottom: 30,
-                              ),
-                              child: FittedBox(
-                                child: Image.asset(
-                                  "assets/img/Motionlaw-logogold-cr.png",
-                                ),
-                              )))
-                    ],
-                  ),
-                ),
-                Flex(
-                  direction: Axis.horizontal,
-                  children: <Widget>[
-                    FittedBox(
-                      child: Image.asset(
-                        "assets/img/DC-Immigration-Law-Firm.png",
-                        fit: BoxFit.fitWidth,
-                        width: MediaQuery.of(context).size.width,
-                      ),
-                      //fit: BoxFit.fitWidth,
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 0,
-                    top: 20,
-                    right: 0,
-                    bottom: 0,
-                  ),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: IconButton(
-                      color: Theme.Colors.loginGradientButton,
-                      icon: FaIcon(FontAwesomeIcons.userFriends),
-                      iconSize: 40,
-                      onPressed: () {},
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: PageView(
-                    controller: _pageController,
-                    onPageChanged: (i) {
-                      if (i == 0) {
-                        setState(() {
-                          right = Colors.white;
-                          left = Colors.black;
-                        });
-                      } else if (i == 1) {
-                        setState(() {
-                          right = Colors.black;
-                          left = Colors.white;
-                        });
-                      }
-                    },
-                    children: <Widget>[
-                      new ConstrainedBox(
-                        constraints: const BoxConstraints.expand(),
-                        child: _buildSignIn(context),
-                      ),
-                    ],
-                  ),
-                ),
+                  //fit: BoxFit.fitWidth,
+                )
               ],
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 0,
+                top: 20,
+                right: 0,
+                bottom: 0,
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                child: IconButton(
+                  color: Theme.Colors.loginGradientButton,
+                  icon: FaIcon(FontAwesomeIcons.userFriends),
+                  iconSize: 40,
+                  onPressed: () {},
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (i) {
+                  if (i == 0) {
+                    setState(() {
+                      right = Colors.white;
+                      left = Colors.black;
+                    });
+                  } else if (i == 1) {
+                    setState(() {
+                      right = Colors.black;
+                      left = Colors.white;
+                    });
+                  }
+                },
+                children: <Widget>[
+                  new ConstrainedBox(
+                    constraints: const BoxConstraints.expand(),
+                    child: _buildSignIn(context),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -214,21 +206,7 @@ class _LoginPageState extends State<LoginPage>
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    _cleanAuth(context);
     _pageController = PageController();
-  }
-
-  _cleanAuth(context) async {
-    var box = await Hive.openBox('app_data');
-    /*http.Response response = await http.post("https://qqv.oex.mybluehost.me/api/logout",
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer ${box.get('token')}'
-        }
-    );
-    data = json.decode(response.body);
-    print(data);
-    await box.delete('token');*/
   }
 
   void showInSnackBar(String value, String warn) {
@@ -376,9 +354,8 @@ class _LoginPageState extends State<LoginPage>
                           print(response);
                           if (response == true) {
                             Navigator.pushNamed(context, '/loading');
-                            var timer = Timer(Duration(seconds: 3),
+                            Timer(Duration(seconds: 3),
                                 () => Navigator.pushNamed(context, '/home'));
-                            //timer.cancel();
                           } else {
                             _handleClickMe(
                                 'The username or password you entered is incorrect!');

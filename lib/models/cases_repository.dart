@@ -45,7 +45,7 @@ class CasesRepository {
   ];
 
   static List<Cases> loadCases(Status state) {
-    if (Status == Status.open) {
+    if (state == Status.open) {
       return _allCases;
     } else {
       return _allCases.where((p) => p.state == state).toList();

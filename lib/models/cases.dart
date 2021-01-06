@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 enum Status {
   open,
   closed,
@@ -44,5 +46,5 @@ class Cases {
   String get assetPackage => 'shrine_images';
 
   @override
-  String toString() => '$name (id=$id)';
+  String toString() => '$name (id == $id)';
 }

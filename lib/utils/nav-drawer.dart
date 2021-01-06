@@ -8,15 +8,13 @@ import 'package:http/http.dart' as http;
 _logout(context) async {
   Navigator.pushNamed(context, '/loading');
   var box = await Hive.openBox('app_data');
-  http.Response response = await http.post(
-      "https://qqv.oex.mybluehost.me/api/logout",
+  await http.post("https://qqv.oex.mybluehost.me/api/logout",
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer ${box.get('token')}'
       });
   await box.delete('token');
-  var timer = Timer(
-      Duration(seconds: 2), () => {Navigator.pushNamed(context, '/login')});
+  Timer(Duration(seconds: 2), () => {Navigator.pushNamed(context, '/login')});
 }
 
 class NavDrawer extends StatelessWidget {
